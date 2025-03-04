@@ -5,7 +5,16 @@
 package proyecto3_topicos;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.SpiderWebPlot;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -122,15 +131,51 @@ public class principalFrame extends javax.swing.JFrame {
 
     private void crearBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBotonActionPerformed
         // TODO add your handling code here:
-        panelMovible p = new panelMovible(300,300);
-        p.setVisible(true);
-        p.setBackground(Color.black);
+        graficarWeb(this.graficasPane,"");
         
-        this.graficasPane.add(p);
         this.graficasPane.revalidate();
         System.out.println("AAAAAAAAAAA");
     }//GEN-LAST:event_crearBotonActionPerformed
 
+    public void graficarWeb(JPanel panelDondeGraficar, String documento){
+        //abrir el xls o csv
+        //conseguir los datos    
+        ArrayList<String> ejes = new ArrayList<>();
+        Map<String,ArrayList<Integer>> seriesYValores = new HashMap<>();
+        
+        
+        
+        //lleno el default category set
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        
+        for (Map.Entry<String, ArrayList<Integer>> parSerieValores : seriesYValores.entrySet()) {
+            for(int i = 0; i < parSerieValores.getValue().size(); i++){
+                dataset.addValue(parSerieValores.getValue().get(i), parSerieValores.getKey(), ejes.get(i));
+            }
+        }
+        
+        //crear el dataset
+//        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//        String series = "Score"; // Only one series in a radar chart
+//        dataset.addValue(8, series, "Speed");
+//        dataset.addValue(7, series, "Strength");
+//        dataset.addValue(9, series, "Agility");
+//        dataset.addValue(6, series, "Endurance");
+//        dataset.addValue(8, series, "Flexibility");
+//        
+        //crear el plot
+        SpiderWebPlot plot = new SpiderWebPlot(dataset);
+
+        //crear la chart
+        JFreeChart chart = new JFreeChart("Athlete Performance", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
+
+        //crear la chartPanel
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(300,300));
+        chartPanel.addMouseMotionListener(new arrastrarMouseListener(chartPanel));
+        
+        panelDondeGraficar.add(chartPanel);
+    }
     /**
      * @param args the command line arguments
      */
