@@ -21,11 +21,15 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.SpiderWebPlot;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
@@ -143,13 +147,22 @@ public class principalFrame extends javax.swing.JFrame {
 
     private void crearBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBotonActionPerformed
         // TODO add your handling code here:
-        graficarWeb(this.graficasPane,"C:\\Users\\AJMM\\Desktop\\escuela\\Tec laguna\\4to semestre\\topicos avanzados\\unidad 3\\proyecto\\datos_grafica.xlsx");
+        switch(this.jComboBox1.getSelectedIndex()){
+            case 0:
+                webFrame wf = new webFrame();
+                wf.setVisible(true);
+                wf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                JDialog d = new JDialog();
+                
+                
+                graficarWeb(this.graficasPane,"C:\\Users\\AJMM\\Desktop\\escuela\\Tec laguna\\4to semestre\\topicos avanzados\\unidad 3\\proyecto\\datos_grafica.xlsx", "Titulo");
+                break;
+        }
         
         this.graficasPane.revalidate();
-        System.out.println("AAAAAAAAAAA");
     }//GEN-LAST:event_crearBotonActionPerformed
 
-    public void graficarWeb(JPanel panelDondeGraficar, String documento){
+    public void graficarWeb(JPanel panelDondeGraficar, String documento, String titulo){
         int indiceDeColumnaDeEjes = 0;
         int indiceDeRenglonDeSeries = 0;
         
@@ -158,7 +171,6 @@ public class principalFrame extends javax.swing.JFrame {
         Map<String,ArrayList<Integer>> seriesYValores = new HashMap<>();
         
         //conseguir los datos    
-        System.out.println("RAAAAAAAAAAa");
         //si es xls, codigo conseguido de: https://howtodoinjava.com/java/library/readingwriting-excel-files-in-java-poi-tutorial/
         FileInputStream file = null;
         try {
@@ -166,43 +178,40 @@ public class principalFrame extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("BBBBBBBBBBBBB");
-        //Create Workbook instance holding reference to .xlsx file
+
+        //Crear workbook
         XSSFWorkbook workbook = null;
         try {
             workbook = new XSSFWorkbook(file);
         } catch (IOException ex) {
             Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("CCCCCCCCCCCC");
-        //Get first/desired sheet from the workbook
+
+        //Conseguir la primer sheet
         XSSFSheet sheet = workbook.getSheetAt(0);
-
-        //Iterate through each rows one by one
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            System.out.println("DDDDDDDDDDd");
-          Row row = rowIterator.next();
-
-          //For each row, iterate through all the columns
-          Iterator<Cell> cellIterator = row.cellIterator();
-
-          while (cellIterator.hasNext()) {
-
-            Cell cell = cellIterator.next();
+        //explicacion de código conseguida de: https://poi.apache.org/components/spreadsheet/quick-guide.html?utm_source=chatgpt.com
+        
+        //conseguir los valores
+        for (int i = 0; i < sheet.getPhysicalNumberOfRows(); i++) {
+            Row currRow = sheet.getRow(i);
             
-            //Check the cell type and format accordingly
-            switch (cell.getCellType()) {
-              case NUMERIC:
-                System.out.print(cell.getNumericCellValue() + "t");
-                break;
-              case STRING:
-                System.out.print(cell.getStringCellValue() + "t");
-                break;
-            }
-          }
-          System.out.println("");
+            //conseguir los ejes
+            ejes.add(currRow.getCell(indiceDeColumnaDeEjes).getStringCellValue());
         }
+        
+        //conseguir los valores de las series
+        //itero por las columnas
+        for (int i = indiceDeColumnaDeEjes + 1; i < sheet.getRow(0).getPhysicalNumberOfCells(); i++) {
+            //itero por los renglones
+            ArrayList<Integer> currValores = new ArrayList<>();
+            //lleno este arrayList de sus valores
+            for (int j = indiceDeRenglonDeSeries + 1; j < sheet.getPhysicalNumberOfRows(); j++) {                
+                currValores.add((int)sheet.getRow(j).getCell(i).getNumericCellValue());
+            }
+            
+            seriesYValores.put(sheet.getRow(0).getCell(i).getStringCellValue(), currValores);
+        }
+        //cerrar el xls
         try {    
             file.close();
             //si es csv      
@@ -233,15 +242,39 @@ public class principalFrame extends javax.swing.JFrame {
         SpiderWebPlot plot = new SpiderWebPlot(dataset);
 
         //crear la chart
-        JFreeChart chart = new JFreeChart("Athlete Performance", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
-
+        JFreeChart chart = new JFreeChart(titulo, JFreeChart.DEFAULT_TITLE_FONT, plot, false);
+        chart.addSubtitle(new LegendTitle(chart.getPlot()));//necesito hace resto para que me muestre las series
+        
         //crear la chartPanel
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(300,300));
         chartPanel.addMouseMotionListener(new arrastrarMouseListener(chartPanel));
-        
         panelDondeGraficar.add(chartPanel);
     }
+    
+    public ArrayList<Cell> conseguirDatosDeRenglonExcell(Sheet hoja, int indiceRenglon, int indiceInicio, int indiceFin){
+        ArrayList<Cell> returnAL = new ArrayList<>();
+        
+        //lenar el array list
+        Row r = hoja.getRow(indiceRenglon);
+        for(int i = indiceInicio; i < indiceFin; i++){
+            returnAL.add(r.getCell(i));
+        }
+        
+        return returnAL;
+    }
+    
+    public ArrayList<Cell> conseguirDatosDeColumnaExcell(Sheet hoja, int indiceColumna, int indiceInicio, int indiceFin){
+        ArrayList<Cell> returnAL = new ArrayList<>();
+        
+        //lenar el array list
+        for(int i = indiceInicio; i < indiceFin; i++){
+            returnAL.add(hoja.getRow(i).getCell(indiceColumna));
+        }
+        
+        return returnAL;
+    }
+    
     /**
      * @param args the command line arguments
      */
