@@ -138,11 +138,12 @@ public class principalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_crearBotonActionPerformed
 
     public void graficarWeb(JPanel panelDondeGraficar, String documento){
-        //abrir el xls o csv
-        //conseguir los datos    
         ArrayList<String> ejes = new ArrayList<>();
         Map<String,ArrayList<Integer>> seriesYValores = new HashMap<>();
         
+        //conseguir los datos    
+            //si es xls
+            //si es csv      
         
         
         //lleno el default category set
