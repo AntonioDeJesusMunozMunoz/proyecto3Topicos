@@ -22,12 +22,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -276,7 +278,7 @@ public class principalFrame extends javax.swing.JFrame {
         fc.setMultiSelectionEnabled(true);
         
         // Aplicar filtro para csv
-         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos (*.csv)" , "csv");
+         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos (*.csv, *.xls, *.xlsx)" , "csv", "xls", "xlsx");
         fc.setFileFilter(filtro);
         int resultado = fc.showOpenDialog(null);
         
@@ -284,25 +286,115 @@ public class principalFrame extends javax.swing.JFrame {
             this.mostrarArchivoLabel.setText(fc.getSelectedFile().getName());
             archivoSeleccionado = fc.getSelectedFile().getAbsolutePath();
             System.out.println(archivoSeleccionado);
-            cargarCSVEnJTable(archivoSeleccionado, this.mostrarArchivoTable);
+            
+            //si es csv
+            if(fc.getSelectedFile().getName().endsWith("csv")){
+                cargarCSVEnJTable(archivoSeleccionado, this.mostrarArchivoTable);
+            }
+            
+            //si es xls
+            
+            if(fc.getSelectedFile().getName().endsWith("xls") || fc.getSelectedFile().getName().endsWith("xlsx")){
+                cargarXLSEnTable(archivoSeleccionado, this.mostrarArchivoTable);
+            }
+            
         }
-
+        
     }//GEN-LAST:event_elegirArchivoBotonActionPerformed
     
     public static void cargarCSVEnJTable(String archivoCSV, JTable table) {
         try (BufferedReader br = new BufferedReader(new FileReader(archivoCSV))) {
-            String linea;
-            String[] columnas = br.readLine().split(","); // Leer encabezados
-            DefaultTableModel model = new DefaultTableModel(columnas, 0);
+            //variables que necesito
+            Vector<Vector<Object>> datosParaTable = new Vector<>();
+            
+            //leo todos los datos del csv
+            String currLinea = "";
+            int cuantasColumnas = 0;
+            while ((currLinea = br.readLine()) != null) {
+                Vector<Object> currVector = new Vector<>();
+                
+                //leo renglón
+                for (Object currString : currLinea.split(",")) {
+                    currVector.add(currString);
+                }
+                
+                //actualizo cuantas columnas
+                cuantasColumnas = Math.max(cuantasColumnas, currVector.size());
+                
+                //lo pongo en el vector de todos los datos
+                datosParaTable.add(currVector);
+            }
+            
+            // Le pongo nombres a las columnas de que 1,2,3,4,5 para que el usuario lo vea mas facil
+            Vector<String> nombresColumnas = new Vector<>();
+            for (int i = 0; i < cuantasColumnas; i++) {
+                nombresColumnas.add("" + (i + 1));
+            }
+            
+            //le pongo el modelo a la table
+            table.setModel(new DefaultTableModel(datosParaTable, nombresColumnas));
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e.getCause());
+        }
+    }
+    
+    public static void cargarXLSEnTable(String archivoExcell, JTable table){
+        //si es xls, codigo conseguido de: https://howtodoinjava.com/java/library/readingwriting-excel-files-in-java-poi-tutorial/
+        FileInputStream file = null;
+        try {
+            file = new FileInputStream(new File(archivoExcell));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-            while ((linea = br.readLine()) != null) {
-                model.addRow(linea.split(","));
+        //Crear workbook
+        XSSFWorkbook workbook = null;
+        try {
+            workbook = new XSSFWorkbook(file);
+        } catch (IOException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Conseguir la primer sheet
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        //explicacion de código conseguida de: https://poi.apache.org/components/spreadsheet/quick-guide.html?utm_source=chatgpt.com
+        //necesito que sean vectores para darselos directo a el constructor del model
+        Vector<Vector<Object>> datosParaTable = new Vector<>();
+        int cuantasColumnas = 0;
+        //recorro la sheet
+        for (Row row : sheet) {
+                Vector<Object> datosRenglon = new Vector<>();
+                for (Cell cell : row) {
+                    //dependiendo del tipo es como lo pido
+                    switch (cell.getCellType()) {
+                        case STRING:
+                            datosRenglon.add(cell.getStringCellValue());
+                            break;
+                        case NUMERIC:
+                            datosRenglon.add(cell.getNumericCellValue());
+                            break;
+                        case BOOLEAN:
+                            datosRenglon.add(cell.getBooleanCellValue());
+                            break;
+                            
+                        default: 
+                            datosRenglon.add(""); //para las vacias
+                            break;
+                    }
+                }
+                //comparo la longitud de este renglon contra el mayor para conseguir cuantas columnas hay
+                cuantasColumnas = Math.max(cuantasColumnas, datosRenglon.size());
+                datosParaTable.add(datosRenglon);
             }
 
-            table.setModel(model);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            // Le pongo nombres a las columnas de que 1,2,3,4,5 para que el usuario lo vea mas facil
+            Vector<String> nombresColumnas = new Vector<>();
+            for (int i = 0; i < cuantasColumnas; i++) {
+                nombresColumnas.add("" + (i + 1));
+            }
+
+            //le pongo el modelo a la table
+            table.setModel(new DefaultTableModel(datosParaTable, nombresColumnas));
     }
     
     public void graficarWeb(JPanel panelDondeGraficar, String documento, String titulo){
