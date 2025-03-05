@@ -4,6 +4,7 @@
  */
 package proyecto3_topicos;
 
+import java.awt.BorderLayout;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.ss.usermodel.Row;
@@ -12,20 +13,34 @@ import java.util.Iterator;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.SpiderWebPlot;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
@@ -37,26 +52,16 @@ public class principalFrame extends javax.swing.JFrame {
     /**
      * Creates new form principalFrame
      */
+    String archivoSeleccionado;
+    
     public principalFrame() {
         initComponents();
-        panelMovible p = new panelMovible(300,300);
-        p.setVisible(true);
-        p.setBackground(Color.green);
         
-        panelMovible p2 = new panelMovible(300,300);
-        p2.setVisible(true);
-        p2.setBackground(Color.blue);
-        
-        //cambiar los componentes
-        this.graficasPane.setBackground(Color.red);
-        //this.graficasPane.setLayout(new DragLayout());
-        this.graficasPane.setLayout(new GridBagLayout());
-        
-        //añadir los componentes
-        this.graficasPane.add(p);
-        this.graficasPane.add(p2);
     }
-
+    
+    public void mostrarArchivoCSV(String archivo){
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,23 +73,119 @@ public class principalFrame extends javax.swing.JFrame {
 
         graficasScrollPane = new javax.swing.JScrollPane();
         graficasPane = new javax.swing.JPanel();
+        mostrarGraficasScrollPane = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        mostrarArchivoScrollPane = new javax.swing.JScrollPane();
+        mostrarArchivoTable = new javax.swing.JTable();
         imprimirAPDFBoton = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         crearBoton = new javax.swing.JButton();
+        elegirArchivoBoton = new javax.swing.JButton();
+        mostrarArchivoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         graficasScrollPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        graficasPane.setBackground(new java.awt.Color(255, 153, 153));
+
+        mostrarGraficasScrollPane.setBackground(new java.awt.Color(255, 255, 204));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 271, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 283, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 283, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 254, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 228, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout mostrarGraficasScrollPaneLayout = new javax.swing.GroupLayout(mostrarGraficasScrollPane);
+        mostrarGraficasScrollPane.setLayout(mostrarGraficasScrollPaneLayout);
+        mostrarGraficasScrollPaneLayout.setHorizontalGroup(
+            mostrarGraficasScrollPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mostrarGraficasScrollPaneLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 23, Short.MAX_VALUE))
+        );
+        mostrarGraficasScrollPaneLayout.setVerticalGroup(
+            mostrarGraficasScrollPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mostrarGraficasScrollPaneLayout.createSequentialGroup()
+                .addGroup(mostrarGraficasScrollPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 19, Short.MAX_VALUE))
+        );
+
+        mostrarArchivoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        mostrarArchivoScrollPane.setViewportView(mostrarArchivoTable);
+
         javax.swing.GroupLayout graficasPaneLayout = new javax.swing.GroupLayout(graficasPane);
         graficasPane.setLayout(graficasPaneLayout);
         graficasPaneLayout.setHorizontalGroup(
             graficasPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 844, Short.MAX_VALUE)
+            .addComponent(mostrarGraficasScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mostrarArchivoScrollPane)
         );
         graficasPaneLayout.setVerticalGroup(
             graficasPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 476, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, graficasPaneLayout.createSequentialGroup()
+                .addComponent(mostrarArchivoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mostrarGraficasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         graficasScrollPane.setViewportView(graficasPane);
@@ -103,6 +204,17 @@ public class principalFrame extends javax.swing.JFrame {
             }
         });
 
+        elegirArchivoBoton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        elegirArchivoBoton.setText("Elegir archivo...");
+        elegirArchivoBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                elegirArchivoBotonActionPerformed(evt);
+            }
+        });
+
+        mostrarArchivoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        mostrarArchivoLabel.setText("Ningún archivo seleccionado...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,32 +222,40 @@ public class principalFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(graficasScrollPane)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(imprimirAPDFBoton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(graficasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 990, Short.MAX_VALUE)
+                                .addComponent(imprimirAPDFBoton)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(elegirArchivoBoton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(mostrarArchivoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(crearBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 572, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(32, 32, 32))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(crearBoton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(crearBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(elegirArchivoBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mostrarArchivoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(1, 1, 1)))
-                .addGap(25, 25, 25)
-                .addComponent(graficasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(graficasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
                 .addComponent(imprimirAPDFBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -143,13 +263,141 @@ public class principalFrame extends javax.swing.JFrame {
 
     private void crearBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBotonActionPerformed
         // TODO add your handling code here:
-        graficarWeb(this.graficasPane,"C:\\Users\\AJMM\\Desktop\\escuela\\Tec laguna\\4to semestre\\topicos avanzados\\unidad 3\\proyecto\\datos_grafica.xlsx");
+        switch(this.jComboBox1.getSelectedIndex()){
+            case 0:
+                
+                break;
+        }
         
         this.graficasPane.revalidate();
-        System.out.println("AAAAAAAAAAA");
     }//GEN-LAST:event_crearBotonActionPerformed
 
-    public void graficarWeb(JPanel panelDondeGraficar, String documento){
+    private void elegirArchivoBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elegirArchivoBotonActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setMultiSelectionEnabled(true);
+        
+        // Aplicar filtro para csv
+         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos (*.csv, *.xls, *.xlsx)" , "csv", "xls", "xlsx");
+        fc.setFileFilter(filtro);
+        int resultado = fc.showOpenDialog(null);
+        
+        if (resultado == JFileChooser.APPROVE_OPTION){
+            this.mostrarArchivoLabel.setText(fc.getSelectedFile().getName());
+            archivoSeleccionado = fc.getSelectedFile().getAbsolutePath();
+            System.out.println(archivoSeleccionado);
+            
+            //si es csv
+            if(fc.getSelectedFile().getName().endsWith("csv")){
+                cargarCSVEnJTable(archivoSeleccionado, this.mostrarArchivoTable);
+            }
+            
+            //si es xls
+            
+            if(fc.getSelectedFile().getName().endsWith("xls") || fc.getSelectedFile().getName().endsWith("xlsx")){
+                cargarXLSEnTable(archivoSeleccionado, this.mostrarArchivoTable);
+            }
+            
+        }
+        
+    }//GEN-LAST:event_elegirArchivoBotonActionPerformed
+    
+    public static void cargarCSVEnJTable(String archivoCSV, JTable table) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivoCSV))) {
+            //variables que necesito
+            Vector<Vector<Object>> datosParaTable = new Vector<>();
+            
+            //leo todos los datos del csv
+            String currLinea = "";
+            int cuantasColumnas = 0;
+            while ((currLinea = br.readLine()) != null) {
+                Vector<Object> currVector = new Vector<>();
+                
+                //leo renglón
+                for (Object currString : currLinea.split(",")) {
+                    currVector.add(currString);
+                }
+                
+                //actualizo cuantas columnas
+                cuantasColumnas = Math.max(cuantasColumnas, currVector.size());
+                
+                //lo pongo en el vector de todos los datos
+                datosParaTable.add(currVector);
+            }
+            
+            // Le pongo nombres a las columnas de que 1,2,3,4,5 para que el usuario lo vea mas facil
+            Vector<String> nombresColumnas = new Vector<>();
+            for (int i = 0; i < cuantasColumnas; i++) {
+                nombresColumnas.add("" + (i + 1));
+            }
+            
+            //le pongo el modelo a la table
+            table.setModel(new DefaultTableModel(datosParaTable, nombresColumnas));
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e.getCause());
+        }
+    }
+    
+    public static void cargarXLSEnTable(String archivoExcell, JTable table){
+        //si es xls, codigo conseguido de: https://howtodoinjava.com/java/library/readingwriting-excel-files-in-java-poi-tutorial/
+        FileInputStream file = null;
+        try {
+            file = new FileInputStream(new File(archivoExcell));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Crear workbook
+        XSSFWorkbook workbook = null;
+        try {
+            workbook = new XSSFWorkbook(file);
+        } catch (IOException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Conseguir la primer sheet
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        //explicacion de código conseguida de: https://poi.apache.org/components/spreadsheet/quick-guide.html?utm_source=chatgpt.com
+        //necesito que sean vectores para darselos directo a el constructor del model
+        Vector<Vector<Object>> datosParaTable = new Vector<>();
+        int cuantasColumnas = 0;
+        //recorro la sheet
+        for (Row row : sheet) {
+                Vector<Object> datosRenglon = new Vector<>();
+                for (Cell cell : row) {
+                    //dependiendo del tipo es como lo pido
+                    switch (cell.getCellType()) {
+                        case STRING:
+                            datosRenglon.add(cell.getStringCellValue());
+                            break;
+                        case NUMERIC:
+                            datosRenglon.add(cell.getNumericCellValue());
+                            break;
+                        case BOOLEAN:
+                            datosRenglon.add(cell.getBooleanCellValue());
+                            break;
+                            
+                        default: 
+                            datosRenglon.add(""); //para las vacias
+                            break;
+                    }
+                }
+                //comparo la longitud de este renglon contra el mayor para conseguir cuantas columnas hay
+                cuantasColumnas = Math.max(cuantasColumnas, datosRenglon.size());
+                datosParaTable.add(datosRenglon);
+            }
+
+            // Le pongo nombres a las columnas de que 1,2,3,4,5 para que el usuario lo vea mas facil
+            Vector<String> nombresColumnas = new Vector<>();
+            for (int i = 0; i < cuantasColumnas; i++) {
+                nombresColumnas.add("" + (i + 1));
+            }
+
+            //le pongo el modelo a la table
+            table.setModel(new DefaultTableModel(datosParaTable, nombresColumnas));
+    }
+    
+    public void graficarWeb(JPanel panelDondeGraficar, String documento, String titulo){
         int indiceDeColumnaDeEjes = 0;
         int indiceDeRenglonDeSeries = 0;
         
@@ -158,7 +406,6 @@ public class principalFrame extends javax.swing.JFrame {
         Map<String,ArrayList<Integer>> seriesYValores = new HashMap<>();
         
         //conseguir los datos    
-        System.out.println("RAAAAAAAAAAa");
         //si es xls, codigo conseguido de: https://howtodoinjava.com/java/library/readingwriting-excel-files-in-java-poi-tutorial/
         FileInputStream file = null;
         try {
@@ -166,43 +413,40 @@ public class principalFrame extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("BBBBBBBBBBBBB");
-        //Create Workbook instance holding reference to .xlsx file
+
+        //Crear workbook
         XSSFWorkbook workbook = null;
         try {
             workbook = new XSSFWorkbook(file);
         } catch (IOException ex) {
             Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("CCCCCCCCCCCC");
-        //Get first/desired sheet from the workbook
+
+        //Conseguir la primer sheet
         XSSFSheet sheet = workbook.getSheetAt(0);
-
-        //Iterate through each rows one by one
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            System.out.println("DDDDDDDDDDd");
-          Row row = rowIterator.next();
-
-          //For each row, iterate through all the columns
-          Iterator<Cell> cellIterator = row.cellIterator();
-
-          while (cellIterator.hasNext()) {
-
-            Cell cell = cellIterator.next();
+        //explicacion de código conseguida de: https://poi.apache.org/components/spreadsheet/quick-guide.html?utm_source=chatgpt.com
+        
+        //conseguir los valores
+        for (int i = 0; i < sheet.getPhysicalNumberOfRows(); i++) {
+            Row currRow = sheet.getRow(i);
             
-            //Check the cell type and format accordingly
-            switch (cell.getCellType()) {
-              case NUMERIC:
-                System.out.print(cell.getNumericCellValue() + "t");
-                break;
-              case STRING:
-                System.out.print(cell.getStringCellValue() + "t");
-                break;
-            }
-          }
-          System.out.println("");
+            //conseguir los ejes
+            ejes.add(currRow.getCell(indiceDeColumnaDeEjes).getStringCellValue());
         }
+        
+        //conseguir los valores de las series
+        //itero por las columnas
+        for (int i = indiceDeColumnaDeEjes + 1; i < sheet.getRow(0).getPhysicalNumberOfCells(); i++) {
+            //itero por los renglones
+            ArrayList<Integer> currValores = new ArrayList<>();
+            //lleno este arrayList de sus valores
+            for (int j = indiceDeRenglonDeSeries + 1; j < sheet.getPhysicalNumberOfRows(); j++) {                
+                currValores.add((int)sheet.getRow(j).getCell(i).getNumericCellValue());
+            }
+            
+            seriesYValores.put(sheet.getRow(0).getCell(i).getStringCellValue(), currValores);
+        }
+        //cerrar el xls
         try {    
             file.close();
             //si es csv      
@@ -233,15 +477,39 @@ public class principalFrame extends javax.swing.JFrame {
         SpiderWebPlot plot = new SpiderWebPlot(dataset);
 
         //crear la chart
-        JFreeChart chart = new JFreeChart("Athlete Performance", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
-
+        JFreeChart chart = new JFreeChart(titulo, JFreeChart.DEFAULT_TITLE_FONT, plot, false);
+        chart.addSubtitle(new LegendTitle(chart.getPlot()));//necesito hace resto para que me muestre las series
+        
         //crear la chartPanel
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(300,300));
         chartPanel.addMouseMotionListener(new arrastrarMouseListener(chartPanel));
-        
         panelDondeGraficar.add(chartPanel);
     }
+    
+    public ArrayList<Cell> conseguirDatosDeRenglonExcell(Sheet hoja, int indiceRenglon, int indiceInicio, int indiceFin){
+        ArrayList<Cell> returnAL = new ArrayList<>();
+        
+        //lenar el array list
+        Row r = hoja.getRow(indiceRenglon);
+        for(int i = indiceInicio; i < indiceFin; i++){
+            returnAL.add(r.getCell(i));
+        }
+        
+        return returnAL;
+    }
+    
+    public ArrayList<Cell> conseguirDatosDeColumnaExcell(Sheet hoja, int indiceColumna, int indiceInicio, int indiceFin){
+        ArrayList<Cell> returnAL = new ArrayList<>();
+        
+        //lenar el array list
+        for(int i = indiceInicio; i < indiceFin; i++){
+            returnAL.add(hoja.getRow(i).getCell(indiceColumna));
+        }
+        
+        return returnAL;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -279,9 +547,18 @@ public class principalFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton crearBoton;
+    private javax.swing.JButton elegirArchivoBoton;
     private javax.swing.JPanel graficasPane;
     private javax.swing.JScrollPane graficasScrollPane;
     private javax.swing.JButton imprimirAPDFBoton;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel mostrarArchivoLabel;
+    private javax.swing.JScrollPane mostrarArchivoScrollPane;
+    private javax.swing.JTable mostrarArchivoTable;
+    private javax.swing.JPanel mostrarGraficasScrollPane;
     // End of variables declaration//GEN-END:variables
 }
