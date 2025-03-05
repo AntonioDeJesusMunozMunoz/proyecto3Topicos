@@ -4,13 +4,25 @@
  */
 package proyecto3_topicos;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.CellType;
+import java.util.Iterator;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
+import org.apache.poi.ss.usermodel.Cell;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.SpiderWebPlot;
@@ -131,19 +143,72 @@ public class principalFrame extends javax.swing.JFrame {
 
     private void crearBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBotonActionPerformed
         // TODO add your handling code here:
-        graficarWeb(this.graficasPane,"");
+        graficarWeb(this.graficasPane,"C:\\Users\\AJMM\\Desktop\\escuela\\Tec laguna\\4to semestre\\topicos avanzados\\unidad 3\\proyecto\\datos_grafica.xlsx");
         
         this.graficasPane.revalidate();
         System.out.println("AAAAAAAAAAA");
     }//GEN-LAST:event_crearBotonActionPerformed
 
     public void graficarWeb(JPanel panelDondeGraficar, String documento){
+        int indiceDeColumnaDeEjes = 0;
+        int indiceDeRenglonDeSeries = 0;
+        
+        //creo las estructuras de datos que necesitaré
         ArrayList<String> ejes = new ArrayList<>();
         Map<String,ArrayList<Integer>> seriesYValores = new HashMap<>();
         
         //conseguir los datos    
-            //si es xls
+        System.out.println("RAAAAAAAAAAa");
+        //si es xls, codigo conseguido de: https://howtodoinjava.com/java/library/readingwriting-excel-files-in-java-poi-tutorial/
+        FileInputStream file = null;
+        try {
+            file = new FileInputStream(new File(documento));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("BBBBBBBBBBBBB");
+        //Create Workbook instance holding reference to .xlsx file
+        XSSFWorkbook workbook = null;
+        try {
+            workbook = new XSSFWorkbook(file);
+        } catch (IOException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("CCCCCCCCCCCC");
+        //Get first/desired sheet from the workbook
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        //Iterate through each rows one by one
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            System.out.println("DDDDDDDDDDd");
+          Row row = rowIterator.next();
+
+          //For each row, iterate through all the columns
+          Iterator<Cell> cellIterator = row.cellIterator();
+
+          while (cellIterator.hasNext()) {
+
+            Cell cell = cellIterator.next();
+            
+            //Check the cell type and format accordingly
+            switch (cell.getCellType()) {
+              case NUMERIC:
+                System.out.print(cell.getNumericCellValue() + "t");
+                break;
+              case STRING:
+                System.out.print(cell.getStringCellValue() + "t");
+                break;
+            }
+          }
+          System.out.println("");
+        }
+        try {    
+            file.close();
             //si es csv      
+        } catch (IOException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
         //lleno el default category set
