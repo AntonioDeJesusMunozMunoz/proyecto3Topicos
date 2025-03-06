@@ -117,7 +117,7 @@ public class principalFrame extends javax.swing.JFrame {
     public principalFrame() {
         initComponents();
 
-        graficoPanels = new JPanel[]{jPanel1, jPanel2, jPanel3, jPanel4};
+        graficoPanels = new JPanel[]{grafica1Panel, grafica2Panel, grafica3Panel, grafica4Panel};
     }
     
     /**
@@ -257,7 +257,7 @@ public class principalFrame extends javax.swing.JFrame {
         });
 
         graficasComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        graficasComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gráfica de telaraña", "Gráfica de dispersión", "Item 3", "Item 4" }));
+        graficasComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gráfica de telaraña", "Gráfica de dispersión", "Gráfica de área", "Item 4" }));
 
         crearBoton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         crearBoton.setText("CREAR:");
@@ -324,7 +324,7 @@ public class principalFrame extends javax.swing.JFrame {
 
     private void crearBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBotonActionPerformed
         // TODO add your handling code here:
-        switch(this.jComboBox1.getSelectedIndex()){
+        switch(this.graficasComboBox.getSelectedIndex()){
             case 0:
             grafica1Panel.removeAll();//le quito el panel anterior
                 
@@ -401,10 +401,10 @@ public class principalFrame extends javax.swing.JFrame {
 
             // Capturar las imágenes de los 4 jPanel.
             // Se asume que se llaman jPanel1, jPanel2, jPanel3 y jPanel4.
-            BufferedImage imagenPanel1 = captureComponentImage(jPanel1, scaleFactor);
-            BufferedImage imagenPanel2 = captureComponentImage(jPanel2, scaleFactor);
-            BufferedImage imagenPanel3 = captureComponentImage(jPanel3, scaleFactor);
-            BufferedImage imagenPanel4 = captureComponentImage(jPanel4, scaleFactor);
+            BufferedImage imagenPanel1 = captureComponentImage(grafica1Panel, scaleFactor);
+            BufferedImage imagenPanel2 = captureComponentImage(grafica2Panel, scaleFactor);
+            BufferedImage imagenPanel3 = captureComponentImage(grafica3Panel, scaleFactor);
+            BufferedImage imagenPanel4 = captureComponentImage(grafica4Panel, scaleFactor);
 
             // Crear el documento PDF (utilizando tamaño A4)
             Document document = new Document(PageSize.A4);
@@ -663,7 +663,8 @@ public class principalFrame extends javax.swing.JFrame {
         grafica2Panel.add(cp, BorderLayout.CENTER);
         grafica2Panel.revalidate();
         grafica2Panel.repaint(); 
-
+    }
+    
     private BufferedImage captureComponentImage(Component comp, int scaleFactor) {
         int width = comp.getWidth();
         int height = comp.getHeight();
@@ -676,6 +677,7 @@ public class principalFrame extends javax.swing.JFrame {
         g2.dispose();
         return img;
     }
+    
     private ChartPanel generarGraficoDesdeTable() {
         DefaultTableModel modelo = (DefaultTableModel) this.mostrarArchivoTable.getModel();
 
@@ -773,7 +775,7 @@ public class principalFrame extends javax.swing.JFrame {
 
         // Generar el ChartPanel y ajustar su tamaño (puedes personalizar la dimensión)
         ChartPanel cp = new ChartPanel(chart);
-        cp.setPreferredSize(new Dimension(jPanel1.getWidth(), jPanel1.getHeight()));
+        cp.setPreferredSize(new Dimension(grafica1Panel.getWidth(), grafica1Panel.getHeight()));
 
         return cp;
     }
