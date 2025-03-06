@@ -64,9 +64,6 @@ public class principalFrame extends javax.swing.JFrame {
         
     }
     
-    public void mostrarArchivoCSV(String archivo){
-        
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,7 +83,7 @@ public class principalFrame extends javax.swing.JFrame {
         mostrarArchivoScrollPane = new javax.swing.JScrollPane();
         mostrarArchivoTable = new javax.swing.JTable();
         imprimirAPDFBoton = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        graficasComboBox = new javax.swing.JComboBox<>();
         crearBoton = new javax.swing.JButton();
         elegirArchivoBoton = new javax.swing.JButton();
         mostrarArchivoLabel = new javax.swing.JLabel();
@@ -198,8 +195,8 @@ public class principalFrame extends javax.swing.JFrame {
         imprimirAPDFBoton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         imprimirAPDFBoton.setText("IMPRIMIR A PDF");
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gráfica de telaraña", "Gráfica de dispersión", "Item 3", "Item 4" }));
+        graficasComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        graficasComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gráfica de telaraña", "Gráfica de dispersión", "Item 3", "Item 4" }));
 
         crearBoton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         crearBoton.setText("CREAR:");
@@ -241,7 +238,7 @@ public class principalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(crearBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(graficasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32))))
         );
         layout.setVerticalGroup(
@@ -249,7 +246,7 @@ public class principalFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(graficasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(crearBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(elegirArchivoBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -266,7 +263,7 @@ public class principalFrame extends javax.swing.JFrame {
 
     private void crearBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBotonActionPerformed
         // TODO add your handling code here:
-        switch(this.jComboBox1.getSelectedIndex()){
+        switch(this.graficasComboBox.getSelectedIndex()){
             case 0:
                 grafica1Panel.removeAll();//le quito el panel anterior
                 
@@ -571,10 +568,10 @@ public class principalFrame extends javax.swing.JFrame {
     private javax.swing.JPanel grafica2Panel;
     private javax.swing.JPanel grafica3Panel;
     private javax.swing.JPanel grafica4Panel;
+    private javax.swing.JComboBox<String> graficasComboBox;
     private javax.swing.JPanel graficasPane;
     private javax.swing.JScrollPane graficasScrollPane;
     private javax.swing.JButton imprimirAPDFBoton;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel mostrarArchivoLabel;
     private javax.swing.JScrollPane mostrarArchivoScrollPane;
     private javax.swing.JTable mostrarArchivoTable;
