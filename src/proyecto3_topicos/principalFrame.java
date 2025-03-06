@@ -322,45 +322,36 @@ public class principalFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void crearBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBotonActionPerformed
-        // Si ya se han creado 4 gráficas, se informa y se termina la acción.
-        if (graficoCount >= 4) {
-            JOptionPane.showMessageDialog(this,
-                    "Máximo 4 gráficas",
-                    "Advertencia",
-                    JOptionPane.WARNING_MESSAGE);
+
+        // Solo se procesa si la segunda opción del combobox está activada (índice 1)
+        if (this.jComboBox1.getSelectedIndex() == 1) {
+            // Verificar si ya se ha creado la gráfica de área en jPanel3
+            if (jPanel3.getComponentCount() > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "SOLO UNA GRAFICA DE AREA",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Generar la gráfica usando los datos del JTable
+            ChartPanel cp = generarGraficoDesdeTable();
+            if (cp != null) {
+                // Se coloca la gráfica en jPanel3
+                jPanel3.removeAll();
+                jPanel3.setLayout(new BorderLayout());
+                jPanel3.add(cp, BorderLayout.CENTER);
+                jPanel3.revalidate();
+                jPanel3.repaint();
+            }
+        } else {
+            // Si no se seleccionó la opción 2, puede hacerse otro tipo de procesamiento o ignorar la acción
+            // Por ejemplo, podríamos lanzar un mensaje o simplemente retornar
+            // JOptionPane.showMessageDialog(this, "Seleccione la opción de Área", "Información", JOptionPane.INFORMATION_MESSAGE);
             return;
+
         }
 
-        // Se puede mantener el switch si en algún caso se necesite diferenciación,
-        // pero según lo solicitado, independientemente de la opción del combobox,
-        // se generará la gráfica a partir de los datos del JTable.
-        switch (this.jComboBox1.getSelectedIndex()) {
-            case 0:
-                // Opción 0: proceso actual, si existiera.
-                break;
-            case 1:
-                // Opción 1: se podría realizar algún procesamiento distinto.
-                break;
-            // Más casos si es necesario.
-        }
-
-        // Se genera la gráfica usando los datos del JTable.
-        ChartPanel cp = generarGraficoDesdeTable();
-        if (cp != null) {
-            // Se selecciona el panel destino según el contador (jPanel1, jPanel2, etc.).
-            JPanel targetPanel = graficoPanels[graficoCount];
-            targetPanel.removeAll();
-            targetPanel.setLayout(new BorderLayout());
-            targetPanel.add(cp, BorderLayout.CENTER);
-            targetPanel.revalidate();
-            targetPanel.repaint();
-
-            // Se incrementa el contador para la próxima gráfica.
-            graficoCount++;
-        }
-
-        // Se actualiza el contenedor general.
-        this.graficasPane.revalidate();
     }//GEN-LAST:event_crearBotonActionPerformed
 
     private void elegirArchivoBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elegirArchivoBotonActionPerformed
@@ -486,7 +477,6 @@ public class principalFrame extends javax.swing.JFrame {
     }
 
     public static void cargarXLSEnTable(String archivoExcell, JTable table) {
-        //si es xls, codigo conseguido de: https://howtodoinjava.com/java/library/readingwriting-excel-files-in-java-poi-tutorial/
         FileInputStream file = null;
         try {
             file = new FileInputStream(new File(archivoExcell));
@@ -494,25 +484,31 @@ public class principalFrame extends javax.swing.JFrame {
             Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //Crear workbook
-        XSSFWorkbook workbook = null;
+        Workbook workbook = null;
         try {
-            workbook = new XSSFWorkbook(file);
+            // Verificar la extensión del archivo
+            if (archivoExcell.toLowerCase().endsWith("xlsx")) {
+                workbook = new XSSFWorkbook(file);
+            } else if (archivoExcell.toLowerCase().endsWith("xls")) {
+                workbook = new HSSFWorkbook(file);
+            } else {
+                throw new IllegalArgumentException("Formato de archivo no soportado.");
+            }
         } catch (IOException ex) {
             Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //Conseguir la primer sheet
-        XSSFSheet sheet = workbook.getSheetAt(0);
-        //explicacion de código conseguida de: https://poi.apache.org/components/spreadsheet/quick-guide.html?utm_source=chatgpt.com
-        //necesito que sean vectores para darselos directo a el constructor del model
+        // Conseguir la primera hoja
+        Sheet sheet = workbook.getSheetAt(0);
+        // Preparar las estructuras de datos para la JTable
         Vector<Vector<Object>> datosParaTable = new Vector<>();
         int cuantasColumnas = 0;
-        //recorro la sheet
+
+        // Recorrer la hoja de Excel
         for (Row row : sheet) {
             Vector<Object> datosRenglon = new Vector<>();
             for (Cell cell : row) {
-                //dependiendo del tipo es como lo pido
+                // Dependiendo del tipo de celda, se agrega el valor al vector
                 switch (cell.getCellType()) {
                     case STRING:
                         datosRenglon.add(cell.getStringCellValue());
@@ -523,24 +519,23 @@ public class principalFrame extends javax.swing.JFrame {
                     case BOOLEAN:
                         datosRenglon.add(cell.getBooleanCellValue());
                         break;
-
                     default:
-                        datosRenglon.add(""); //para las vacias
+                        datosRenglon.add(""); // Para celdas vacías o de tipo desconocido
                         break;
                 }
             }
-            //comparo la longitud de este renglon contra el mayor para conseguir cuantas columnas hay
+            // Comparar la longitud del renglón para determinar el número máximo de columnas
             cuantasColumnas = Math.max(cuantasColumnas, datosRenglon.size());
             datosParaTable.add(datosRenglon);
         }
 
-        // Le pongo nombres a las columnas de que 1,2,3,4,5 para que el usuario lo vea mas facil
+        // Crear los nombres de las columnas de forma automática (1, 2, 3,...)
         Vector<String> nombresColumnas = new Vector<>();
         for (int i = 0; i < cuantasColumnas; i++) {
             nombresColumnas.add("" + (i + 1));
         }
 
-        //le pongo el modelo a la table
+        // Aplicar el modelo a la JTable
         table.setModel(new DefaultTableModel(datosParaTable, nombresColumnas));
     }
 
@@ -658,7 +653,7 @@ public class principalFrame extends javax.swing.JFrame {
 
         int numColumnas = modelo.getColumnCount();
 
-        // Extraer los nombres de series desde la primera fila (omitiendo la primera columna)
+        // Extraer los nombres de las series desde la primera fila (omitiendo la primera columna)
         String[] seriesNombres = new String[numColumnas - 1];
         for (int col = 1; col < numColumnas; col++) {
             Object objSerie = modelo.getValueAt(0, col);
@@ -696,7 +691,7 @@ public class principalFrame extends javax.swing.JFrame {
                 "Categorías", // Etiqueta eje X
                 "Valores", // Etiqueta eje Y
                 dataset, // Conjunto de datos
-                PlotOrientation.VERTICAL, // Orientación
+                PlotOrientation.VERTICAL,// Orientación
                 true, // Leyenda
                 true, // Tooltips
                 false // URLs
@@ -707,6 +702,38 @@ public class principalFrame extends javax.swing.JFrame {
             File f = new File(this.archivoSeleccionado);
             chart.addSubtitle(new TextTitle("Fuente: " + f.getName()));
         }
+
+        // ********* Aquí se cambia el color de las series agregando transparencia *********
+        // Se obtiene el CategoryPlot y su renderer
+        CategoryPlot plot = chart.getCategoryPlot();
+        CategoryItemRenderer renderer = plot.getRenderer();
+
+        // Ejemplo de colores base para cada serie (ajusta según necesites)
+        // Se crea el color con transparencia (valor alfa de 128 sobre 255, es decir, 50% de opacidad)
+        for (int i = 0; i < dataset.getRowCount(); i++) {
+            Color baseColor;
+            switch (i) {
+                case 0:
+                    baseColor = new Color(255, 0, 0);     // Rojo
+                    break;
+                case 1:
+                    baseColor = new Color(0, 255, 0);     // Verde
+                    break;
+                case 2:
+                    baseColor = new Color(0, 0, 255);     // Azul
+                    break;
+                case 3:
+                    baseColor = new Color(255, 165, 0);   // Naranja
+                    break;
+                default:
+                    baseColor = new Color(128, 128, 128); // Gris para el resto
+                    break;
+            }
+            // Crear el color transparente
+            Color colorTransparente = new Color(baseColor.getRed(), baseColor.getGreen(), baseColor.getBlue(), 128);
+            renderer.setSeriesPaint(i, colorTransparente);
+        }
+        // *******************************************************************************
 
         // Generar el ChartPanel y ajustar su tamaño (puedes personalizar la dimensión)
         ChartPanel cp = new ChartPanel(chart);
