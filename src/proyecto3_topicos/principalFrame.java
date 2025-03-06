@@ -74,10 +74,10 @@ public class principalFrame extends javax.swing.JFrame {
         graficasScrollPane = new javax.swing.JScrollPane();
         graficasPane = new javax.swing.JPanel();
         mostrarGraficasScrollPane = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        grafica1Panel = new javax.swing.JPanel();
+        grafica2Panel = new javax.swing.JPanel();
+        grafica3Panel = new javax.swing.JPanel();
+        grafica4Panel = new javax.swing.JPanel();
         mostrarArchivoScrollPane = new javax.swing.JScrollPane();
         mostrarArchivoTable = new javax.swing.JTable();
         imprimirAPDFBoton = new javax.swing.JButton();
@@ -94,47 +94,47 @@ public class principalFrame extends javax.swing.JFrame {
 
         mostrarGraficasScrollPane.setBackground(new java.awt.Color(255, 255, 204));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout grafica1PanelLayout = new javax.swing.GroupLayout(grafica1Panel);
+        grafica1Panel.setLayout(grafica1PanelLayout);
+        grafica1PanelLayout.setHorizontalGroup(
+            grafica1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 271, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        grafica1PanelLayout.setVerticalGroup(
+            grafica1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout grafica2PanelLayout = new javax.swing.GroupLayout(grafica2Panel);
+        grafica2Panel.setLayout(grafica2PanelLayout);
+        grafica2PanelLayout.setHorizontalGroup(
+            grafica2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 283, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        grafica2PanelLayout.setVerticalGroup(
+            grafica2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout grafica3PanelLayout = new javax.swing.GroupLayout(grafica3Panel);
+        grafica3Panel.setLayout(grafica3PanelLayout);
+        grafica3PanelLayout.setHorizontalGroup(
+            grafica3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 283, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        grafica3PanelLayout.setVerticalGroup(
+            grafica3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout grafica4PanelLayout = new javax.swing.GroupLayout(grafica4Panel);
+        grafica4Panel.setLayout(grafica4PanelLayout);
+        grafica4PanelLayout.setHorizontalGroup(
+            grafica4PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 254, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        grafica4PanelLayout.setVerticalGroup(
+            grafica4PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 228, Short.MAX_VALUE)
         );
 
@@ -143,23 +143,23 @@ public class principalFrame extends javax.swing.JFrame {
         mostrarGraficasScrollPaneLayout.setHorizontalGroup(
             mostrarGraficasScrollPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mostrarGraficasScrollPaneLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(grafica1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(grafica2Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(grafica3Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 23, Short.MAX_VALUE))
+                .addComponent(grafica4Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 27, Short.MAX_VALUE))
         );
         mostrarGraficasScrollPaneLayout.setVerticalGroup(
             mostrarGraficasScrollPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mostrarGraficasScrollPaneLayout.createSequentialGroup()
                 .addGroup(mostrarGraficasScrollPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(grafica4Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(grafica1Panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(grafica2Panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(grafica3Panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 19, Short.MAX_VALUE))
         );
 
@@ -226,7 +226,7 @@ public class principalFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(graficasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 990, Short.MAX_VALUE)
+                                .addGap(0, 1002, Short.MAX_VALUE)
                                 .addComponent(imprimirAPDFBoton)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -245,13 +245,11 @@ public class principalFrame extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(crearBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(elegirArchivoBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mostrarArchivoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(crearBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(elegirArchivoBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mostrarArchivoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
                 .addComponent(graficasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(imprimirAPDFBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,7 +263,11 @@ public class principalFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         switch(this.jComboBox1.getSelectedIndex()){
             case 0:
+                System.out.println("RAAAAAAAAAAa");
+                grafica1Panel.removeAll();//le quito el panel anterior
                 
+                grafica1Panel.setLayout(new BorderLayout());
+                graficarWeb(grafica1Panel, archivoSeleccionado, "");
                 break;
         }
         
@@ -398,8 +400,8 @@ public class principalFrame extends javax.swing.JFrame {
     }
     
     public void graficarWeb(JPanel panelDondeGraficar, String documento, String titulo){
-        int indiceDeColumnaDeEjes = 0;
-        int indiceDeRenglonDeSeries = 0;
+        int indiceDeRenglonDeEjes = 0;
+        int indiceDeColumnaDeSeries = 0;
         
         //creo las estructuras de datos que necesitaré
         ArrayList<String> ejes = new ArrayList<>();
@@ -425,26 +427,22 @@ public class principalFrame extends javax.swing.JFrame {
         //Conseguir la primer sheet
         XSSFSheet sheet = workbook.getSheetAt(0);
         //explicacion de código conseguida de: https://poi.apache.org/components/spreadsheet/quick-guide.html?utm_source=chatgpt.com
-        
-        //conseguir los valores
-        for (int i = 0; i < sheet.getPhysicalNumberOfRows(); i++) {
-            Row currRow = sheet.getRow(i);
-            
-            //conseguir los ejes
-            ejes.add(currRow.getCell(indiceDeColumnaDeEjes).getStringCellValue());
+
+        // Conseguir los ejes
+        for (int i = indiceDeRenglonDeEjes + 1; i < sheet.getRow(0).getPhysicalNumberOfCells(); i++) {
+            ejes.add(sheet.getRow(indiceDeRenglonDeEjes).getCell(i).getStringCellValue());
         }
-        
-        //conseguir los valores de las series
-        //itero por las columnas
-        for (int i = indiceDeColumnaDeEjes + 1; i < sheet.getRow(0).getPhysicalNumberOfCells(); i++) {
-            //itero por los renglones
+
+        // Conseguir los valores de las series
+        // Iterar por las filas (en lugar de las columnas)
+        for (int i = indiceDeRenglonDeEjes + 1; i < sheet.getPhysicalNumberOfRows(); i++) {
             ArrayList<Integer> currValores = new ArrayList<>();
-            //lleno este arrayList de sus valores
-            for (int j = indiceDeRenglonDeSeries + 1; j < sheet.getPhysicalNumberOfRows(); j++) {                
-                currValores.add((int)sheet.getRow(j).getCell(i).getNumericCellValue());
+            // Llenar este arrayList con valores de la fila actual
+            for (int j = indiceDeColumnaDeSeries + 1; j < sheet.getRow(i).getPhysicalNumberOfCells(); j++) {
+                currValores.add((int) sheet.getRow(i).getCell(j).getNumericCellValue());
             }
-            
-            seriesYValores.put(sheet.getRow(0).getCell(i).getStringCellValue(), currValores);
+
+            seriesYValores.put(sheet.getRow(i).getCell(indiceDeColumnaDeSeries).getStringCellValue(), currValores);
         }
         //cerrar el xls
         try {    
@@ -464,15 +462,6 @@ public class principalFrame extends javax.swing.JFrame {
             }
         }
         
-        //crear el dataset
-//        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//        String series = "Score"; // Only one series in a radar chart
-//        dataset.addValue(8, series, "Speed");
-//        dataset.addValue(7, series, "Strength");
-//        dataset.addValue(9, series, "Agility");
-//        dataset.addValue(6, series, "Endurance");
-//        dataset.addValue(8, series, "Flexibility");
-//        
         //crear el plot
         SpiderWebPlot plot = new SpiderWebPlot(dataset);
 
@@ -482,34 +471,12 @@ public class principalFrame extends javax.swing.JFrame {
         
         //crear la chartPanel
         ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setVisible(true);
         chartPanel.setPreferredSize(new Dimension(300,300));
-        chartPanel.addMouseMotionListener(new arrastrarMouseListener(chartPanel));
         panelDondeGraficar.add(chartPanel);
+        panelDondeGraficar.revalidate();
     }
-    
-    public ArrayList<Cell> conseguirDatosDeRenglonExcell(Sheet hoja, int indiceRenglon, int indiceInicio, int indiceFin){
-        ArrayList<Cell> returnAL = new ArrayList<>();
-        
-        //lenar el array list
-        Row r = hoja.getRow(indiceRenglon);
-        for(int i = indiceInicio; i < indiceFin; i++){
-            returnAL.add(r.getCell(i));
-        }
-        
-        return returnAL;
-    }
-    
-    public ArrayList<Cell> conseguirDatosDeColumnaExcell(Sheet hoja, int indiceColumna, int indiceInicio, int indiceFin){
-        ArrayList<Cell> returnAL = new ArrayList<>();
-        
-        //lenar el array list
-        for(int i = indiceInicio; i < indiceFin; i++){
-            returnAL.add(hoja.getRow(i).getCell(indiceColumna));
-        }
-        
-        return returnAL;
-    }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -548,14 +515,14 @@ public class principalFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton crearBoton;
     private javax.swing.JButton elegirArchivoBoton;
+    private javax.swing.JPanel grafica1Panel;
+    private javax.swing.JPanel grafica2Panel;
+    private javax.swing.JPanel grafica3Panel;
+    private javax.swing.JPanel grafica4Panel;
     private javax.swing.JPanel graficasPane;
     private javax.swing.JScrollPane graficasScrollPane;
     private javax.swing.JButton imprimirAPDFBoton;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel mostrarArchivoLabel;
     private javax.swing.JScrollPane mostrarArchivoScrollPane;
     private javax.swing.JTable mostrarArchivoTable;
