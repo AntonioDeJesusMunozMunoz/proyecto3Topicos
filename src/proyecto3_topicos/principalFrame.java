@@ -37,11 +37,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.SpiderWebPlot;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
@@ -194,7 +199,7 @@ public class principalFrame extends javax.swing.JFrame {
         imprimirAPDFBoton.setText("IMPRIMIR A PDF");
 
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gráfica de telaraña", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gráfica de telaraña", "Gráfica de dispersión", "Item 3", "Item 4" }));
 
         crearBoton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         crearBoton.setText("CREAR:");
@@ -226,7 +231,7 @@ public class principalFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(graficasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 1002, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(imprimirAPDFBoton)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -263,11 +268,15 @@ public class principalFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         switch(this.jComboBox1.getSelectedIndex()){
             case 0:
-                System.out.println("RAAAAAAAAAAa");
                 grafica1Panel.removeAll();//le quito el panel anterior
                 
                 grafica1Panel.setLayout(new BorderLayout());
                 graficarWeb(grafica1Panel, archivoSeleccionado, "");
+                break;
+                
+            case 1: 
+                grafica2Panel.removeAll();
+                scatterPlotChart();
                 break;
         }
         
@@ -476,7 +485,50 @@ public class principalFrame extends javax.swing.JFrame {
         panelDondeGraficar.add(chartPanel);
         panelDondeGraficar.revalidate();
     }
-
+    
+     //FUNCIONES DE GRÁFICAS
+    //crear el XYDataset
+    public XYDataset createXYDataset(String titulo, int x, int y) {
+        DefaultTableModel modelo = (DefaultTableModel) mostrarArchivoTable.getModel();
+        
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeries series = new XYSeries("Datos de la tabla");
+        
+        for(int i = 0; i < modelo.getRowCount(); i++) {
+            try{
+               double valX = Double.parseDouble(modelo.getValueAt(i, x).toString());
+                double valY = Double.parseDouble(modelo.getValueAt(i, y).toString());
+                series.add(valX, valY); 
+            } catch(Exception ex){
+                continue;
+            }
+            
+        }
+        dataset.addSeries(series);
+        return dataset;
+    }
+    
+    //Crear el scatterPlot
+    public void scatterPlotChart(){
+        int x = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el valor de x"));
+        int y = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el valor de y"));
+        String titulo = JOptionPane.showInputDialog("Ingrese el titulo");
+        
+       
+        XYDataset ds = createXYDataset(titulo, x, y);
+        
+        JFreeChart chart = ChartFactory.createScatterPlot(titulo, "x", "y", ds, PlotOrientation.VERTICAL, true, true, false);
+        
+        ChartPanel cp = new ChartPanel(chart);
+        cp.setPreferredSize(grafica2Panel.getSize());
+        
+        
+        grafica2Panel.setLayout(new BorderLayout());
+        grafica2Panel.add(cp, BorderLayout.CENTER);
+        grafica2Panel.revalidate();
+        grafica2Panel.repaint(); 
+    }
+    
     /**
      * @param args the command line arguments
      */
