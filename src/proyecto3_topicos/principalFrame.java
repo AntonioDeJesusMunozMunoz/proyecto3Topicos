@@ -37,11 +37,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.SpiderWebPlot;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -112,13 +117,9 @@ public class principalFrame extends javax.swing.JFrame {
     public principalFrame() {
         initComponents();
 
-        graficoPanels = new JPanel[]{jPanel1, jPanel2, jPanel3, jPanel4};
+        graficoPanels = new JPanel[]{grafica1Panel, grafica2Panel, grafica3Panel, grafica4Panel};
     }
-
-    public void mostrarArchivoCSV(String archivo) {
-
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,14 +132,14 @@ public class principalFrame extends javax.swing.JFrame {
         graficasScrollPane = new javax.swing.JScrollPane();
         graficasPane = new javax.swing.JPanel();
         mostrarGraficasScrollPane = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        grafica1Panel = new javax.swing.JPanel();
+        grafica2Panel = new javax.swing.JPanel();
+        grafica3Panel = new javax.swing.JPanel();
+        grafica4Panel = new javax.swing.JPanel();
         mostrarArchivoScrollPane = new javax.swing.JScrollPane();
         mostrarArchivoTable = new javax.swing.JTable();
         imprimirAPDFBoton = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        graficasComboBox = new javax.swing.JComboBox<>();
         crearBoton = new javax.swing.JButton();
         elegirArchivoBoton = new javax.swing.JButton();
         mostrarArchivoLabel = new javax.swing.JLabel();
@@ -151,47 +152,47 @@ public class principalFrame extends javax.swing.JFrame {
 
         mostrarGraficasScrollPane.setBackground(new java.awt.Color(255, 255, 204));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout grafica1PanelLayout = new javax.swing.GroupLayout(grafica1Panel);
+        grafica1Panel.setLayout(grafica1PanelLayout);
+        grafica1PanelLayout.setHorizontalGroup(
+            grafica1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 271, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        grafica1PanelLayout.setVerticalGroup(
+            grafica1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout grafica2PanelLayout = new javax.swing.GroupLayout(grafica2Panel);
+        grafica2Panel.setLayout(grafica2PanelLayout);
+        grafica2PanelLayout.setHorizontalGroup(
+            grafica2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 283, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        grafica2PanelLayout.setVerticalGroup(
+            grafica2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout grafica3PanelLayout = new javax.swing.GroupLayout(grafica3Panel);
+        grafica3Panel.setLayout(grafica3PanelLayout);
+        grafica3PanelLayout.setHorizontalGroup(
+            grafica3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 283, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        grafica3PanelLayout.setVerticalGroup(
+            grafica3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout grafica4PanelLayout = new javax.swing.GroupLayout(grafica4Panel);
+        grafica4Panel.setLayout(grafica4PanelLayout);
+        grafica4PanelLayout.setHorizontalGroup(
+            grafica4PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 254, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        grafica4PanelLayout.setVerticalGroup(
+            grafica4PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 228, Short.MAX_VALUE)
         );
 
@@ -200,23 +201,23 @@ public class principalFrame extends javax.swing.JFrame {
         mostrarGraficasScrollPaneLayout.setHorizontalGroup(
             mostrarGraficasScrollPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mostrarGraficasScrollPaneLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(grafica1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(grafica2Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(grafica3Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 23, Short.MAX_VALUE))
+                .addComponent(grafica4Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 87, Short.MAX_VALUE))
         );
         mostrarGraficasScrollPaneLayout.setVerticalGroup(
             mostrarGraficasScrollPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mostrarGraficasScrollPaneLayout.createSequentialGroup()
                 .addGroup(mostrarGraficasScrollPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(grafica4Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(grafica1Panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(grafica2Panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(grafica3Panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 19, Short.MAX_VALUE))
         );
 
@@ -255,8 +256,8 @@ public class principalFrame extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gráfica de telaraña", "Gráfica de área", "Item 3", "Item 4" }));
+        graficasComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        graficasComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gráfica de telaraña", "Gráfica de dispersión", "Gráfica de área", "Item 4" }));
 
         crearBoton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         crearBoton.setText("CREAR:");
@@ -286,9 +287,9 @@ public class principalFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(graficasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(graficasScrollPane)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 990, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(imprimirAPDFBoton)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -298,7 +299,7 @@ public class principalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(crearBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(graficasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32))))
         );
         layout.setVerticalGroup(
@@ -306,7 +307,7 @@ public class principalFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(graficasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(crearBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(elegirArchivoBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -322,11 +323,22 @@ public class principalFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void crearBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBotonActionPerformed
-
-        // Solo se procesa si la segunda opción del combobox está activada (índice 1)
-        if (this.jComboBox1.getSelectedIndex() == 1) {
+        // TODO add your handling code here:
+        switch(this.graficasComboBox.getSelectedIndex()){
+            case 0:
+            grafica1Panel.removeAll();//le quito el panel anterior
+                
+                grafica1Panel.setLayout(new BorderLayout());
+                graficarWeb(grafica1Panel, archivoSeleccionado, "");
+                break;
+                
+            case 1: 
+                grafica2Panel.removeAll();
+                scatterPlotChart();
+                break;
+            case 2:
             // Verificar si ya se ha creado la gráfica de área en jPanel3
-            if (jPanel3.getComponentCount() > 0) {
+            if (grafica3Panel.getComponentCount() > 0) {
                 JOptionPane.showMessageDialog(this,
                         "SOLO UNA GRAFICA DE AREA",
                         "Advertencia",
@@ -338,20 +350,15 @@ public class principalFrame extends javax.swing.JFrame {
             ChartPanel cp = generarGraficoDesdeTable();
             if (cp != null) {
                 // Se coloca la gráfica en jPanel3
-                jPanel3.removeAll();
-                jPanel3.setLayout(new BorderLayout());
-                jPanel3.add(cp, BorderLayout.CENTER);
-                jPanel3.revalidate();
-                jPanel3.repaint();
+                grafica3Panel.removeAll();
+                grafica3Panel.setLayout(new BorderLayout());
+                grafica3Panel.add(cp, BorderLayout.CENTER);
+                grafica3Panel.revalidate();
+                grafica3Panel.repaint();
             }
-        } else {
-            // Si no se seleccionó la opción 2, puede hacerse otro tipo de procesamiento o ignorar la acción
-            // Por ejemplo, podríamos lanzar un mensaje o simplemente retornar
-            // JOptionPane.showMessageDialog(this, "Seleccione la opción de Área", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-
         }
-
+        
+        this.graficasPane.revalidate();
     }//GEN-LAST:event_crearBotonActionPerformed
 
     private void elegirArchivoBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elegirArchivoBotonActionPerformed
@@ -394,10 +401,10 @@ public class principalFrame extends javax.swing.JFrame {
 
             // Capturar las imágenes de los 4 jPanel.
             // Se asume que se llaman jPanel1, jPanel2, jPanel3 y jPanel4.
-            BufferedImage imagenPanel1 = captureComponentImage(jPanel1, scaleFactor);
-            BufferedImage imagenPanel2 = captureComponentImage(jPanel2, scaleFactor);
-            BufferedImage imagenPanel3 = captureComponentImage(jPanel3, scaleFactor);
-            BufferedImage imagenPanel4 = captureComponentImage(jPanel4, scaleFactor);
+            BufferedImage imagenPanel1 = captureComponentImage(grafica1Panel, scaleFactor);
+            BufferedImage imagenPanel2 = captureComponentImage(grafica2Panel, scaleFactor);
+            BufferedImage imagenPanel3 = captureComponentImage(grafica3Panel, scaleFactor);
+            BufferedImage imagenPanel4 = captureComponentImage(grafica4Panel, scaleFactor);
 
             // Crear el documento PDF (utilizando tamaño A4)
             Document document = new Document(PageSize.A4);
@@ -538,11 +545,11 @@ public class principalFrame extends javax.swing.JFrame {
         // Aplicar el modelo a la JTable
         table.setModel(new DefaultTableModel(datosParaTable, nombresColumnas));
     }
-
-    public void graficarWeb(JPanel panelDondeGraficar, String documento, String titulo) {
-        int indiceDeColumnaDeEjes = 0;
-        int indiceDeRenglonDeSeries = 0;
-
+    
+    public void graficarWeb(JPanel panelDondeGraficar, String documento, String titulo){
+        int indiceDeRenglonDeEjes = 0;
+        int indiceDeColumnaDeSeries = 0;
+        
         //creo las estructuras de datos que necesitaré
         ArrayList<String> ejes = new ArrayList<>();
         Map<String, ArrayList<Integer>> seriesYValores = new HashMap<>();
@@ -568,25 +575,21 @@ public class principalFrame extends javax.swing.JFrame {
         XSSFSheet sheet = workbook.getSheetAt(0);
         //explicacion de código conseguida de: https://poi.apache.org/components/spreadsheet/quick-guide.html?utm_source=chatgpt.com
 
-        //conseguir los valores
-        for (int i = 0; i < sheet.getPhysicalNumberOfRows(); i++) {
-            Row currRow = sheet.getRow(i);
-
-            //conseguir los ejes
-            ejes.add(currRow.getCell(indiceDeColumnaDeEjes).getStringCellValue());
+        // Conseguir los ejes
+        for (int i = indiceDeRenglonDeEjes + 1; i < sheet.getRow(0).getPhysicalNumberOfCells(); i++) {
+            ejes.add(sheet.getRow(indiceDeRenglonDeEjes).getCell(i).getStringCellValue());
         }
 
-        //conseguir los valores de las series
-        //itero por las columnas
-        for (int i = indiceDeColumnaDeEjes + 1; i < sheet.getRow(0).getPhysicalNumberOfCells(); i++) {
-            //itero por los renglones
+        // Conseguir los valores de las series
+        // Iterar por las filas (en lugar de las columnas)
+        for (int i = indiceDeRenglonDeEjes + 1; i < sheet.getPhysicalNumberOfRows(); i++) {
             ArrayList<Integer> currValores = new ArrayList<>();
-            //lleno este arrayList de sus valores
-            for (int j = indiceDeRenglonDeSeries + 1; j < sheet.getPhysicalNumberOfRows(); j++) {
-                currValores.add((int) sheet.getRow(j).getCell(i).getNumericCellValue());
+            // Llenar este arrayList con valores de la fila actual
+            for (int j = indiceDeColumnaDeSeries + 1; j < sheet.getRow(i).getPhysicalNumberOfCells(); j++) {
+                currValores.add((int) sheet.getRow(i).getCell(j).getNumericCellValue());
             }
 
-            seriesYValores.put(sheet.getRow(0).getCell(i).getStringCellValue(), currValores);
+            seriesYValores.put(sheet.getRow(i).getCell(indiceDeColumnaDeSeries).getStringCellValue(), currValores);
         }
         //cerrar el xls
         try {
@@ -604,16 +607,7 @@ public class principalFrame extends javax.swing.JFrame {
                 dataset.addValue(parSerieValores.getValue().get(i), parSerieValores.getKey(), ejes.get(i));
             }
         }
-
-        //crear el dataset
-//        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//        String series = "Score"; // Only one series in a radar chart
-//        dataset.addValue(8, series, "Speed");
-//        dataset.addValue(7, series, "Strength");
-//        dataset.addValue(9, series, "Agility");
-//        dataset.addValue(6, series, "Endurance");
-//        dataset.addValue(8, series, "Flexibility");
-//        
+        
         //crear el plot
         SpiderWebPlot plot = new SpiderWebPlot(dataset);
 
@@ -623,23 +617,67 @@ public class principalFrame extends javax.swing.JFrame {
 
         //crear la chartPanel
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(300, 300));
-        chartPanel.addMouseMotionListener(new arrastrarMouseListener(chartPanel));
+        chartPanel.setVisible(true);
+        chartPanel.setPreferredSize(new Dimension(300,300));
         panelDondeGraficar.add(chartPanel);
+        panelDondeGraficar.revalidate();
     }
-
-    public ArrayList<Cell> conseguirDatosDeRenglonExcell(Sheet hoja, int indiceRenglon, int indiceInicio, int indiceFin) {
-        ArrayList<Cell> returnAL = new ArrayList<>();
-
-        //lenar el array list
-        Row r = hoja.getRow(indiceRenglon);
-        for (int i = indiceInicio; i < indiceFin; i++) {
-            returnAL.add(r.getCell(i));
+    
+     //FUNCIONES DE GRÁFICAS
+    //crear el XYDataset
+    public XYDataset createXYDataset(String titulo, int x, int y) {
+        DefaultTableModel modelo = (DefaultTableModel) mostrarArchivoTable.getModel();
+        
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeries series = new XYSeries("Datos de la tabla");
+        
+        for(int i = 0; i < modelo.getRowCount(); i++) {
+            try{
+               double valX = Double.parseDouble(modelo.getValueAt(i, x).toString());
+                double valY = Double.parseDouble(modelo.getValueAt(i, y).toString());
+                series.add(valX, valY); 
+            } catch(Exception ex){
+                continue;
+            }
+            
         }
-
-        return returnAL;
+        dataset.addSeries(series);
+        return dataset;
     }
-
+    //Crear el scatterPlot
+    public void scatterPlotChart(){
+        int x = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el valor de x"));
+        int y = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el valor de y"));
+        String titulo = JOptionPane.showInputDialog("Ingrese el titulo");
+        
+       
+        XYDataset ds = createXYDataset(titulo, x, y);
+        
+        JFreeChart chart = ChartFactory.createScatterPlot(titulo, "x", "y", ds, PlotOrientation.VERTICAL, true, true, false);
+        
+        ChartPanel cp = new ChartPanel(chart);
+        cp.setPreferredSize(grafica2Panel.getSize());
+        
+        
+        grafica2Panel.setLayout(new BorderLayout());
+        grafica2Panel.add(cp, BorderLayout.CENTER);
+        grafica2Panel.revalidate();
+        grafica2Panel.repaint(); 
+    }
+    
+    private BufferedImage captureComponentImage(Component comp, int scaleFactor) {
+        int width = comp.getWidth();
+        int height = comp.getHeight();
+        // Crear una imagen del tamaño escalado
+        BufferedImage img = new BufferedImage(width * scaleFactor, height * scaleFactor, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = img.createGraphics();
+        // Aplicar el escalado: por ejemplo, scaleFactor=2 duplicará el tamaño
+        g2.scale(scaleFactor, scaleFactor);
+        comp.paint(g2);
+        g2.dispose();
+        return img;
+    }
+    
     private ChartPanel generarGraficoDesdeTable() {
         DefaultTableModel modelo = (DefaultTableModel) this.mostrarArchivoTable.getModel();
 
@@ -737,35 +775,10 @@ public class principalFrame extends javax.swing.JFrame {
 
         // Generar el ChartPanel y ajustar su tamaño (puedes personalizar la dimensión)
         ChartPanel cp = new ChartPanel(chart);
-        cp.setPreferredSize(new Dimension(jPanel1.getWidth(), jPanel1.getHeight()));
+        cp.setPreferredSize(new Dimension(grafica1Panel.getWidth(), grafica1Panel.getHeight()));
 
         return cp;
     }
-
-    public ArrayList<Cell> conseguirDatosDeColumnaExcell(Sheet hoja, int indiceColumna, int indiceInicio, int indiceFin) {
-        ArrayList<Cell> returnAL = new ArrayList<>();
-
-        //lenar el array list
-        for (int i = indiceInicio; i < indiceFin; i++) {
-            returnAL.add(hoja.getRow(i).getCell(indiceColumna));
-        }
-
-        return returnAL;
-    }
-
-    private BufferedImage captureComponentImage(Component comp, int scaleFactor) {
-        int width = comp.getWidth();
-        int height = comp.getHeight();
-        // Crear una imagen del tamaño escalado
-        BufferedImage img = new BufferedImage(width * scaleFactor, height * scaleFactor, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2 = img.createGraphics();
-        // Aplicar el escalado: por ejemplo, scaleFactor=2 duplicará el tamaño
-        g2.scale(scaleFactor, scaleFactor);
-        comp.paint(g2);
-        g2.dispose();
-        return img;
-    }
-
     /**
      * @param args the command line arguments
      */
@@ -804,14 +817,14 @@ public class principalFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton crearBoton;
     private javax.swing.JButton elegirArchivoBoton;
+    private javax.swing.JPanel grafica1Panel;
+    private javax.swing.JPanel grafica2Panel;
+    private javax.swing.JPanel grafica3Panel;
+    private javax.swing.JPanel grafica4Panel;
+    private javax.swing.JComboBox<String> graficasComboBox;
     private javax.swing.JPanel graficasPane;
     private javax.swing.JScrollPane graficasScrollPane;
     private javax.swing.JButton imprimirAPDFBoton;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel mostrarArchivoLabel;
     private javax.swing.JScrollPane mostrarArchivoScrollPane;
     private javax.swing.JTable mostrarArchivoTable;
