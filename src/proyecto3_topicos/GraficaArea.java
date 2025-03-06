@@ -55,9 +55,10 @@ public class GraficaArea extends JFrame {
 
     private File archivo;
     private JFreeChart chart;
+    private ChartPanel chartPanel;
 
     public GraficaArea(File archivo) {
-        super("Gráfica");
+        super("Gráfica de área");
         this.archivo = archivo;
         setSize(800, 580);
         setLayout(null);
@@ -66,7 +67,7 @@ public class GraficaArea extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         crearGrafico();
         agregarBotonPDF();
-        setVisible(true);
+        //setVisible(true);
     }
 
     /**
